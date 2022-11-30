@@ -1,6 +1,6 @@
-import { createServer as createViteDevServer } from "vite";
-import { pluginIndexHtml } from "./plugin-island/indexHtml";
-import pluginReact from "@vitejs/plugin-react";
+import { createServer as createViteDevServer } from 'vite';
+import { pluginIndexHtml } from './plugin-island/indexHtml';
+import pluginReact from '@vitejs/plugin-react';
 
 export async function createDevServer(root = process.cwd()) {
   return createViteDevServer({
@@ -10,7 +10,7 @@ export async function createDevServer(root = process.cwd()) {
        * 接入 react 插件实现热更新效果
        */
       pluginReact(),
-      pluginIndexHtml(),
-    ],
+      pluginIndexHtml()
+    ]
   });
 }

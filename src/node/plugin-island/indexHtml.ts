@@ -1,30 +1,30 @@
-import { CLIENT_ENTRY_PATH, DEFAULT_TEMPLATE_PATH } from "../constants";
+import { CLIENT_ENTRY_PATH, DEFAULT_TEMPLATE_PATH } from '../constants';
 
-import { Plugin } from "vite";
-import { readFile } from "fs/promises";
+import { Plugin } from 'vite';
+import { readFile } from 'fs/promises';
 export function pluginIndexHtml(): Plugin {
   return {
-    name: "island:index-html",
+    name: 'island:index-html',
     transformIndexHtml(html) {
       return {
         html,
         tags: [
           {
-            tag: "script",
+            tag: 'script',
             attrs: {
-              type: "module",
-              src: `/@fs/${CLIENT_ENTRY_PATH}`,
+              type: 'module',
+              src: `/@fs/${CLIENT_ENTRY_PATH}`
             },
-            injectTo: "body",
-          },
-        ],
+            injectTo: 'body'
+          }
+        ]
       };
     },
     configureServer(server) {
       return () => {
         server.middlewares.use(async (req, res, next) => {
           // 1. 读取template.html 的内容
-          let html = await readFile(DEFAULT_TEMPLATE_PATH, "utf-8");
+          let html = await readFile(DEFAULT_TEMPLATE_PATH, 'utf-8');
 
           /**
            * 实现代码变化时重新加载
@@ -36,6 +36,6 @@ export function pluginIndexHtml(): Plugin {
           res.end(html);
         });
       };
-    },
+    }
   };
 }

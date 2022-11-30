@@ -5,6 +5,8 @@
     "module": "commonjs" /* Specify what module code is generated. */,
     "rootDir": "src" /* Specify the root folder within your source files. */,
     "esModuleInterop": true,
-    "jsx": "react-jsx"
-  }
+    "jsx": "react-jsx",
+    "resolveJsonModule": true
+  },
+  "exclude": ["tsup.config.ts"]
 }
