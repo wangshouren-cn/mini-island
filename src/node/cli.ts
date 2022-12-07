@@ -1,7 +1,7 @@
 import { build } from './build';
 import { cac } from 'cac';
-import { createDevServer } from './dev';
 import path from 'path';
+import { ViteDevServer } from 'vite';
 import pkg from '../../package.json';
 
 const version = pkg.version;
@@ -12,10 +12,26 @@ cli
   .command('[root]', 'start dev server')
   .alias('dev')
   .action(async (root: string) => {
-    root = root ? path.resolve(root) : process.cwd();
-    const server = await createDevServer(root);
-    await server.listen();
-    server.printUrls();
+    // root = root ? path.resolve(root) : process.cwd();
+    // const server = await createDevServer(root);
+    // await server.listen();
+    // server.printUrls();
+
+    let server: ViteDevServer;
+
+    const createServer = async () => {
+      const { createDevServer } = await import('./dev.js');
+      server = await createDevServer(root, restartServer);
+      await server.listen();
+      server.printUrls();
+    };
+
+    const restartServer = async () => {
+      await server.close();
+      await createServer();
+    };
+
+    await createServer();
   });
 
 cli
